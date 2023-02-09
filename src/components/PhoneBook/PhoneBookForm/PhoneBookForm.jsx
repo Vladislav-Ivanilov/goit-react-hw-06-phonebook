@@ -1,7 +1,8 @@
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { customAlphabet } from 'nanoid';
-import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+import { addContact } from '../../Redux/contactsSlice';
 import { Forma, Wrap, Label, Input, ErrorMes, Btn } from '../PhoneBook.styled';
 
 const nanoid = customAlphabet('1234567890', 3);
@@ -17,14 +18,16 @@ const initialValues = {
   number: '',
 };
 
-export default function PhoneBookForm({ onSubmit }) {
+export default function PhoneBookForm() {
+  const dispatch = useDispatch();
+
   const handleSubmit = (values, { resetForm }) => {
     const newContact = {
       id: 'id' + nanoid(),
       name: values.name,
       number: values.number,
     };
-    onSubmit(newContact);
+    dispatch(addContact(newContact));
     resetForm();
   };
 
@@ -51,5 +54,3 @@ export default function PhoneBookForm({ onSubmit }) {
     </Formik>
   );
 }
-
-PhoneBookForm.propTypes = { onSubmit: PropTypes.func.isRequired };

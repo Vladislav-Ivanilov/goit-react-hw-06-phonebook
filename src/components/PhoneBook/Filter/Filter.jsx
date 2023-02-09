@@ -1,7 +1,10 @@
-import PropTypes from 'prop-types';
+import { setContactFilter } from 'components/Redux/filterSlice';
+import { useDispatch } from 'react-redux';
 import { WrapFilter, FilterLabel, FilterInput } from '../PhoneBook.styled';
 
-export default function Filter({ value, onFilter }) {
+export default function Filter() {
+  const dispatch = useDispatch();
+
   return (
     <WrapFilter>
       <FilterLabel htmlFor="filter">Find contacts by name</FilterLabel>
@@ -9,14 +12,8 @@ export default function Filter({ value, onFilter }) {
         type="text"
         name="filter"
         id="filter"
-        value={value}
-        onChange={onFilter}
+        onInput={e => dispatch(setContactFilter(e.target.value))}
       />
     </WrapFilter>
   );
 }
-
-Filter.propTypes = {
-  value: PropTypes.string.isRequired,
-  onFilter: PropTypes.func.isRequired,
-};
